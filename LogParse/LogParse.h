@@ -47,4 +47,6 @@ struct parsed_query {
 };
 
 
+struct parsed_log * handle_log(const char *base_log);
+
 #endif
