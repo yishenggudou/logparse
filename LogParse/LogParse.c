@@ -46,6 +46,45 @@ char[13] getPtime(char* datestr){
 }
 
 
+char* getValueFromQuery(char* query, char* key){
+    /*
+     * tag=live&video_type=m3u8&stream_id=jiangxi&useloc=0
+     * 比如 输入 tag 返回 live
+    */
+
+}
+
+char* getMaliu(char* maliu){
+    //计算得到码流值
+
+}
+
+char* getIdc(char* serverip){
+    //计算得到IDC值
+
+}
+
+char* getLocation(char* userip){
+    //得到用户地区信息isp area
+
+
+}
+
+char* getYewu(dict* logMap){
+    //根据规则得到业务值
+
+}
+
+
+dict* logHandle(char* log){
+    /*
+    * 解析日志返回一个完整的dict数据
+    *
+    */
+
+}
+
+
 struct parsed_log * handle_log(const char *base_log){
   bstring log = bfromcstr(base_log);
   printf(">>>: %s\n", bdatae(log, "NULL"));
