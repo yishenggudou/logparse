@@ -7,20 +7,41 @@
 //
 
 #include <stdio.h>
+#include <string.h>
 #include "bstring/bstraux.h"
 #include "bstring/bstrlib.h"
+#include "dict/dict.h"
 #include "LogParse.h"
 
 /**
  * 解析一条日志
  60.217.237.225 119.188.122.17 [31/Jul/2013:21:49:40 +0800] "GET /m3u8/jiangxi/desc.m3u8?tag=live&video_type=m3u8&stream_id=jiangxi&useloc=0&clipsize=128&clipcount=10&f_ulrg=0&cmin=3&cmax=10&path=0&geo=CN-19-248-2&cipi=456010935&tmn=1375277573&pnl=709,751,225&sign=live_ipad HTTP/1.0" 200 777 0.000 "-" "GStreamer souphttpsrc libsoup/2.32.2" "-" owninneragent HIT
 **/
-char* getPtime(char* datestr){
-  char year[4] = {'2','0','1', '3'};
-  char mon[2] = {'0', '0'};
-  char day[2] = {'0', '0'};
-  char hour[2] = {'0', '0'};
-  char min[2] = {'0', '0'};
+
+const char* ptime_mons_keys[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}
+const char* ptime_mons_vals[] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}
+
+char[13] getPtime(char* datestr){
+    //[31/Jul/2013:21:49:40
+    char day[3], year[5], mon[3], hour[3], min[3]; 
+    char ptime[12];
+    char mon_tmp[3];
+    int mon_eq;
+    day[0] = datestr[1];
+    day[1] = datestr[2];
+    day[2] = "\0";
+    mon_tmp[0] = datestr[4];
+    mon_tmp[1] = datestr[5];
+    mon_tmp[2] = datestr[6];
+    mon_tmp[3] = "\0";
+    for (int i=0; i < 4; i++){
+        year[i] = datestr[ 8 + i]; 
+    };
+    year[5] = "\0";
+    for (int i=0; i < 12; i++){
+        mon_eq = strcmp (const char *s1, const char *s2);
+    }
+    
   return "201312232100";
 }
 
