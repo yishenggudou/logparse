@@ -16,6 +16,7 @@
 		433A499F1867238E0084BCA3 /* LogParse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LogParse.c; sourceTree = "<group>"; };
 		433A49A1186726DA0084BCA3 /* bstring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bstring; sourceTree = "<group>"; };
 		433A49A218672A880084BCA3 /* LogParse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogParse.h; sourceTree = "<group>"; };
+		437D5722187E74370029DD71 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dict; sourceTree = "<group>"; };
 		43929E1A1867408E007B1509 /* File.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = File.c; path = tests/File.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -33,6 +34,7 @@
 		433A498F186723720084BCA3 = {
 			isa = PBXGroup;
 			children = (
+				437D5722187E74370029DD71 /* dict */,
 				43929E1918674074007B1509 /* tests */,
 				433A49A1186726DA0084BCA3 /* bstring */,
 				433A499F1867238E0084BCA3 /* LogParse.c */,

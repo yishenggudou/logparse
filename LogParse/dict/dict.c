@@ -438,7 +438,7 @@ int main(int argc, char * argv[])
     t1 = epoch_double();
     for(i = 0; i < nkeys; i++) {
         sprintf(buffer + i * 9, "%08x", i);
-        printf("%d => %s\n", i, buffer + i * 9);
+        printf("%d => %s => %s | %08x\n", i, buffer + i * 9, buffer, i);
     }
     t2 = epoch_double();
     printf(ALIGN, "initialization", t2 - t1);
