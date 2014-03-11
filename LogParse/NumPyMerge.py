@@ -75,8 +75,7 @@ class Merge(object):
         return n
 
     def get_index_map(self):
-        dd = (self.npmmaps[-1]['nowrow'] < self.buffsize)
-        if (len(self.npmmaps) > 0) and dd:
+        if (len(self.npmmaps) > 0) and (self.npmmaps[-1]['nowrow'] < self.buffsize):
             obj = self.npmmaps[-1]
             obj['nowrow'] = obj['nowrow'] + 1
             return len(self.npmmaps) - 1, obj
