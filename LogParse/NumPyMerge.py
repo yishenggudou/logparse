@@ -56,11 +56,11 @@ class Merge(object):
             if f in [len, 'len']:
                 new_f = lambda x, y: x + 1
             elif f in [sum, 'sum']:
-                new_f = lambda x, y: x + float(y)
+                new_f = lambda x, y: x + np.float64(y)
             elif f in ['and']:
-                new_f = lambda x, y: bool(x) and bool(y)
+                new_f = lambda x, y: np.int(x) and np.int(y)
             elif f in ['or']:
-                new_f = lambda x, y: bool(x) or bool(y)
+                new_f = lambda x, y: int(x) or int(y)
             self.merge_funs.append((i, new_f))
         self.count = defaultdict(int)
         self.count['buffsize'] = self.buffsize
@@ -68,6 +68,8 @@ class Merge(object):
     @property
     def np_path(self):
         path = os.path.join(self.tmp_root, str(uuid4()) + '.np.mmap')
+        msg = "GEN NEW PATH: " + path
+        print msg
         return path
 
     def npmmap(self):
@@ -91,6 +93,7 @@ class Merge(object):
             print 'add new mmap'
             return len(self.npmmaps) - 1, obj
 
+    @profile
     def add(self, line):
         fields = line.strip().split(',')
         key = ','.join([fields[i[0]] for i in self.keyindex])
@@ -118,7 +121,7 @@ class Merge(object):
     def write_row(self, key, key_val):
         np_index, now_row = key_val.split(':')
         keys = key.split(',')
-        values = self.npmmaps[np_index][now_row]
+        values = self.npmmaps[np_index]['np'][now_row]
         line_fields = range(len(self.mergerule))
         for i, v in zip(self.keys_index, keys):
             line_fields[i] = v
@@ -127,15 +130,15 @@ class Merge(object):
         return ','.join([str(i) for i in line_fields])
 
     def to_file(self, path):
-        print '>>> to file', path
+        print '>>> to file'
         for fp in self.npmmaps:
-            fp.flush()
+            fp['np'].flush()
         with open(path, 'w') as f:
             for key, key_val in self.keydb.RangeIter():
                 line = self.write_row(key, key_val)
                 f.write(line + '\n')
 
-    def __del__(self, *args, **kwargs):
+    def clean(self, *args, **kwargs):
         from shutil import rmtree
         try:
             rmtree(self.leveldb_path)
@@ -149,6 +152,7 @@ class Merge(object):
         print msg
         print self.count
 
-    clear = __del__
-    __exit__ = __del__
-    __clear__ = __del__
+    clear = clean
+    __exit__ = clean
+    __clear__ = clean
+    __del__ = clean
