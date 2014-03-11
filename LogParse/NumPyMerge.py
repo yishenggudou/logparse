@@ -28,12 +28,6 @@ class Merge(object):
     len(key) == 40 则 40*10000000/1000/1000 = 400M
     转换成py对象需要空间在G级别
     该用numpy的mmap和leveldb 0内存使用
-    >>> mergerule=[(0, None), (1, None), (2, None), (3, None), (4, None), (5, None), (6, None), (7, None), (8, None), (9, sum), (10, len), (11, 'or'), (12, sum), (13, None), (14, None), (15, sum), (16, None), (17, None)]
-    >>> o = Merge(mergerule=mergerule)
-    >>> o.keyindex
-    [(0, None), (1, None), (2, None), (3, None), (4, None), (5, None), (6, None), (7, None), (8, None), (13, None), (14, None), (16, None), (17, None)]
-    >>> o.mergeindex
-    [(9, <built-in function sum>), (10, <built-in function len>), (11, 'or'), (12, <built-in function sum>), (15, <built-in function sum>)]
     """
 
     def __init__(self, mergerule=(), use_shelve=False,):
@@ -81,7 +75,8 @@ class Merge(object):
         return n
 
     def get_index_map(self):
-        if (len(self.npmmaps) > 0) and (self.npmmaps[-1]['nowrow'] < self.buffsize):
+        dd = (self.npmmaps[-1]['nowrow'] < self.buffsize)
+        if (len(self.npmmaps) > 0) and dd:
             obj = self.npmmaps[-1]
             obj['nowrow'] = obj['nowrow'] + 1
             return len(self.npmmaps) - 1, obj
@@ -93,7 +88,6 @@ class Merge(object):
             print 'add new mmap'
             return len(self.npmmaps) - 1, obj
 
-    @profile
     def add(self, line):
         fields = line.strip().split(',')
         key = ','.join([fields[i[0]] for i in self.keyindex])
@@ -120,6 +114,7 @@ class Merge(object):
 
     def write_row(self, key, key_val):
         np_index, now_row = key_val.split(':')
+        np_index = int(np_index)
         keys = key.split(',')
         values = self.npmmaps[np_index]['np'][now_row]
         line_fields = range(len(self.mergerule))
