@@ -93,7 +93,7 @@ class Merge(object):
             print 'add new mmap'
             return len(self.npmmaps) - 1, obj
 
-    @profile
+    #@profile
     def add(self, line):
         fields = line.strip().split(',')
         key = ','.join([fields[i[0]] for i in self.keyindex])
