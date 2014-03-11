@@ -114,6 +114,7 @@ class Merge(object):
     def write_row(self, key, key_val):
         np_index, now_row = key_val.split(':')
         np_index = int(np_index)
+        now_row = int(now_row)
         keys = key.split(',')
         values = self.npmmaps[np_index]['np'][now_row]
         line_fields = range(len(self.mergerule))
